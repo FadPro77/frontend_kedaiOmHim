@@ -53,7 +53,7 @@ const NavigationBar = () => {
                   style={{ cursor: "pointer" }}
                   className="fw-bold ms-4"
                 >
-                  Riwayat
+                  Riwayathh
                 </Nav.Link>
               </Nav>
               <Nav>
