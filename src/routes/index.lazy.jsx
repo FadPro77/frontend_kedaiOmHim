@@ -5,20 +5,32 @@ import { useRef } from "react";
 import GuestLayout from "../layouts/GuestLayout";
 import ScreenHomepage from "../components/Homepage/ScreenHomepage";
 import { motion } from "motion/react";
+import bgHome from "../assets/img/div-main-container.png";
+
 export const Route = createLazyFileRoute("/")({
   component: Index,
 });
 
 function Index() {
   const [openHomepage, setOpenHomepage] = useState(true);
+
   return (
-    <>
+    <div
+      style={{
+        backgroundImage: `url(${bgHome})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        // minHeight: "100vh",
+        // marginTop: "5rem",
+      }}
+    >
       <GuestLayout
         openHomepage={openHomepage}
         setOpenHomepage={setOpenHomepage}
       >
         {openHomepage && <ScreenHomepage />}
       </GuestLayout>
-    </>
+    </div>
   );
 }
