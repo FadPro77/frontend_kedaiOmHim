@@ -7,21 +7,70 @@ import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Link, useNavigate } from "@tanstack/react-router";
 import logoNav from "../../assets/img/om_him-removebg-preview 1.png";
+import { useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken, setUser } from "../../redux/slices/auth";
+import { profile } from "../../service/auth";
+import { useQuery } from "@tanstack/react-query";
 
 const NavigationBar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, token } = useSelector((state) => state.auth);
+
+  const handleLogout = useCallback(() => {
+    dispatch(setUser(null));
+    dispatch(setToken(null));
+    navigate({ to: "/login" });
+  }, [dispatch, navigate]);
+
+  const { data, isSuccess, isError } = useQuery({
+    queryKey: ["profile"],
+    queryFn: profile,
+    enabled: token ? true : false,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setUser(data));
+    } else if (isError) {
+      handleLogout();
+    }
+  }, [isSuccess, isError, data, dispatch, handleLogout]);
+
+  const logout = (event) => {
+    event.preventDefault();
+
+    handleLogout();
+  };
+
   return (
     <>
       {["xxl"].map((expand) => (
         <Navbar
           collapseOnSelect
           expand="lg"
+          className="py-3"
           style={{
-            backgroundColor: "#d2db1f",
-            height: "5rem",
-            borderRadius: "0 0 20px 20px",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 999,
+            backgroundColor: "rgba(255, 255, 255, 0)",
+            backdropFilter: "none",
+            boxShadow: "none",
+            borderBottom: "none",
           }}
         >
-          <Container>
+          <Container
+            style={{
+              borderBottom: "3px solid white", // Pindahkan ke Container
+              width: "90%", // Atur panjang border di sini
+              height: "9rem",
+              margin: "0 auto", // Tengahin
+            }}
+          >
             <Navbar.Brand
               as={Link}
               to="/"
@@ -30,8 +79,8 @@ const NavigationBar = () => {
             >
               <img
                 src={logoNav}
-                width="80"
-                height="80"
+                width="180px"
+                height="180px"
                 className="d-inline-block align-center"
                 alt="Logo dummy"
               />
@@ -43,7 +92,7 @@ const NavigationBar = () => {
                   as={Link}
                   to="/"
                   style={{ cursor: "pointer" }}
-                  className="fw-bold me-5"
+                  className="fw-bold text-white me-5"
                 >
                   Beranda
                 </Nav.Link>
@@ -51,27 +100,89 @@ const NavigationBar = () => {
                   as={Link}
                   to="/riwayat"
                   style={{ cursor: "pointer" }}
-                  className="fw-bold ms-4"
+                  className="fw-bold me-5 text-white"
                 >
-                  Riwayathh
+                  Tentang Kami
+                </Nav.Link>
+                <Nav.Link
+                  as={Link}
+                  to="/menu"
+                  style={{ cursor: "pointer" }}
+                  className="fw-bold me-5 text-white"
+                >
+                  Menu
+                </Nav.Link>
+                <Nav.Link
+                  as={Link}
+                  to="/layanan"
+                  style={{ cursor: "pointer" }}
+                  className="fw-bold me-5 text-white"
+                >
+                  Layanan
+                </Nav.Link>
+                <Nav.Link
+                  as={Link}
+                  to="/kontak"
+                  style={{ cursor: "pointer" }}
+                  className="fw-bold ms-4 text-white"
+                >
+                  Kontak
                 </Nav.Link>
               </Nav>
               <Nav>
-                <Nav.Link
-                  as={Link}
-                  to="/login"
-                  className="rounded-3 text-center  fw-bold fs-5"
-                  style={{
-                    width: "8rem",
-                    borderColor: "#db411f",
-                    borderStyle: "solid",
-                    borderWidth: "3px",
-                    color: "#db411f",
-                    backgroundColor: "#ebdfdd",
-                  }}
-                >
-                  Login
-                </Nav.Link>
+                {user ? (
+                  <Dropdown align="end">
+                    <Dropdown.Toggle
+                      variant="light"
+                      className="d-flex align-items-center px-3 py-2 rounded-pill border-0"
+                      style={{
+                        backgroundColor: "rgba(255,255,255,0.15)",
+                        color: "white",
+                        fontWeight: "bold",
+                        boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+                      }}
+                    >
+                      <div
+                        className="rounded-circle bg-white text-dark d-flex align-items-center justify-content-center me-2"
+                        style={{
+                          width: "35px",
+                          height: "35px",
+                          fontSize: "1rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {user.first_name.charAt(0).toUpperCase()}
+                      </div>
+                      {user.first_name}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item as={Link} to="/pesanan">
+                        Pesanan
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/riwayat">
+                        Riwayat
+                      </Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                ) : (
+                  <Nav.Link
+                    as={Link}
+                    to="/login"
+                    className="rounded-3 text-center text-white fw-bold fs-5"
+                    style={{
+                      width: "8rem",
+                      borderColor: "#db411f",
+                      borderStyle: "solid",
+                      borderWidth: "3px",
+                      backgroundColor: "#EC492E",
+                    }}
+                  >
+                    Login
+                  </Nav.Link>
+                )}
               </Nav>
             </Navbar.Collapse>
           </Container>
