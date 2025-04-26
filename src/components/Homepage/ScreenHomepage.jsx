@@ -31,14 +31,8 @@ const ScreenHomepage = () => {
         const makananData = await getMenu(null, null, "makanan");
         const minumanData = await getMenu(null, null, "minuman");
 
-        console.log("Data makanan dari API:", makananData);
-        console.log("Data minuman dari API:", minumanData);
-
         const randomMakanan = getRandomItems(makananData, 4);
         const randomMinuman = getRandomItems(minumanData, 4);
-
-        console.log("4 makanan acak:", randomMakanan);
-        console.log("4 minuman acak:", randomMinuman);
 
         setMakanan(randomMakanan);
         setMinuman(randomMinuman);
@@ -216,7 +210,7 @@ const ScreenHomepage = () => {
             >
               <u>Makanan</u>
             </h3>
-            <Button variant="danger" className="fs-5">
+            <Button href="/menu" variant="danger" className="fs-5">
               Lainnya
             </Button>
           </div>
@@ -229,7 +223,7 @@ const ScreenHomepage = () => {
             >
               <u>Minuman</u>
             </h3>
-            <Button variant="danger" className="fs-5">
+            <Button href="/menu" variant="danger" className="fs-5">
               Lainnya
             </Button>
           </div>
