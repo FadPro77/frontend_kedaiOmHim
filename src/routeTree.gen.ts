@@ -17,6 +17,7 @@ import { Route as rootRoute } from "./routes/__root";
 // Create Virtual Routes
 
 const LoginLazyImport = createFileRoute("/login")();
+const AboutLazyImport = createFileRoute("/about")();
 const IndexLazyImport = createFileRoute("/")();
 
 // Create/Update Routes
@@ -26,6 +27,12 @@ const LoginLazyRoute = LoginLazyImport.update({
   path: "/login",
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import("./routes/login.lazy").then((d) => d.Route));
+
+const AboutLazyRoute = AboutLazyImport.update({
+  id: "/about",
+  path: "/about",
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import("./routes/about.lazy").then((d) => d.Route));
 
 const IndexLazyRoute = IndexLazyImport.update({
   id: "/",
@@ -44,6 +51,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof IndexLazyImport;
       parentRoute: typeof rootRoute;
     };
+    "/about": {
+      id: "/about";
+      path: "/about";
+      fullPath: "/about";
+      preLoaderRoute: typeof AboutLazyImport;
+      parentRoute: typeof rootRoute;
+    };
     "/login": {
       id: "/login";
       path: "/login";
@@ -58,36 +72,41 @@ declare module "@tanstack/react-router" {
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexLazyRoute;
+  "/about": typeof AboutLazyRoute;
   "/login": typeof LoginLazyRoute;
 }
 
 export interface FileRoutesByTo {
   "/": typeof IndexLazyRoute;
+  "/about": typeof AboutLazyRoute;
   "/login": typeof LoginLazyRoute;
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute;
   "/": typeof IndexLazyRoute;
+  "/about": typeof AboutLazyRoute;
   "/login": typeof LoginLazyRoute;
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/login";
+  fullPaths: "/" | "/about" | "/login";
   fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/login";
-  id: "__root__" | "/" | "/login";
+  to: "/" | "/about" | "/login";
+  id: "__root__" | "/" | "/about" | "/login";
   fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute;
+  AboutLazyRoute: typeof AboutLazyRoute;
   LoginLazyRoute: typeof LoginLazyRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  AboutLazyRoute: AboutLazyRoute,
   LoginLazyRoute: LoginLazyRoute,
 };
 
@@ -102,11 +121,15 @@ export const routeTree = rootRoute
       "filePath": "__root.jsx",
       "children": [
         "/",
+        "/about",
         "/login"
       ]
     },
     "/": {
       "filePath": "index.lazy.jsx"
+    },
+    "/about": {
+      "filePath": "about.lazy.jsx"
     },
     "/login": {
       "filePath": "login.lazy.jsx"

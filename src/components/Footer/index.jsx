@@ -12,7 +12,7 @@ const Footer = () => {
     <footer style={{ backgroundColor: "#1A2129", color: "white" }}>
       <Container className="py-4">
         {/* Bagian atas */}
-        <Row className="text-start mb-4">
+        <Row className="text-start mb-4 mt-5">
           <Col>
             <h5 className="mb-1 fw-bold" style={{ fontFamily: "'Montserrat'" }}>
               Get in Touch with Us for
