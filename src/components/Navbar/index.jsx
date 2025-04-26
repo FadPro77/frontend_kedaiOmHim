@@ -98,7 +98,7 @@ const NavigationBar = () => {
                 </Nav.Link>
                 <Nav.Link
                   as={Link}
-                  to="/riwayat"
+                  to="/about"
                   style={{ cursor: "pointer" }}
                   className="fw-bold me-5 text-white"
                 >

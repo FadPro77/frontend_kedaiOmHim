@@ -14,6 +14,7 @@ import SelamatDatang from "../../assets/img/Frame-327.png";
 import ownerImg from "../../assets/img/image-30.png";
 import dummyMakanan from "../../assets/img/dummy-makanan.png";
 import { getMenu } from "../../service/menu";
+import { Link } from "@tanstack/react-router";
 
 const getRandomItems = (array, count) => {
   const shuffled = [...array].sort(() => 0.5 - Math.random());
@@ -30,14 +31,8 @@ const ScreenHomepage = () => {
         const makananData = await getMenu(null, null, "makanan");
         const minumanData = await getMenu(null, null, "minuman");
 
-        console.log("Data makanan dari API:", makananData);
-        console.log("Data minuman dari API:", minumanData);
-
         const randomMakanan = getRandomItems(makananData, 4);
         const randomMinuman = getRandomItems(minumanData, 4);
-
-        console.log("4 makanan acak:", randomMakanan);
-        console.log("4 minuman acak:", randomMinuman);
 
         setMakanan(randomMakanan);
         setMinuman(randomMinuman);
@@ -114,12 +109,18 @@ const ScreenHomepage = () => {
             zIndex: 1,
           }}
         >
-          <h2
-            className="text-white text-center mb-5"
-            style={{ fontFamily: "'caveat'", fontSize: "75px" }}
-          >
-            Tentang Kami
-          </h2>
+          <Link to="/about" style={{ textDecoration: "none" }}>
+            <h2
+              className="text-white text-center mb-5"
+              style={{
+                fontFamily: "'Caveat'",
+                fontSize: "75px",
+                cursor: "pointer",
+              }}
+            >
+              Tentang Kami
+            </h2>
+          </Link>
           <Row className="align-items-center mb-5">
             <Col md={8}>
               <p
@@ -193,12 +194,15 @@ const ScreenHomepage = () => {
             zIndex: 1,
           }}
         >
-          <h2
-            className="text-white text-center mb-5"
-            style={{ fontFamily: "'caveat'", fontSize: "75px" }}
-          >
-            Menu
-          </h2>
+          <Link to="/menu" style={{ textDecoration: "none" }}>
+            <h2
+              className="text-white text-center mb-5"
+              style={{ fontFamily: "'caveat'", fontSize: "75px" }}
+            >
+              Menu
+            </h2>
+          </Link>
+
           <div className="d-flex justify-content-between align-items-center mb-3">
             <h3
               className="text-white fs-2"
@@ -206,7 +210,7 @@ const ScreenHomepage = () => {
             >
               <u>Makanan</u>
             </h3>
-            <Button variant="danger" className="fs-5">
+            <Button href="/menu" variant="danger" className="fs-5">
               Lainnya
             </Button>
           </div>
@@ -219,7 +223,7 @@ const ScreenHomepage = () => {
             >
               <u>Minuman</u>
             </h3>
-            <Button variant="danger" className="fs-5">
+            <Button href="/menu" variant="danger" className="fs-5">
               Lainnya
             </Button>
           </div>
