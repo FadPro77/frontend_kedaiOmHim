@@ -23,6 +23,7 @@ const ScreenMenu = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [customAddress, setCustomAddress] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -50,9 +51,15 @@ const ScreenMenu = () => {
       }
     };
 
+    const checkLogin = () => {
+      const token = localStorage.getItem("token");
+      setIsLoggedIn(!!token);
+    };
+
     fetchMenu();
     loadKeranjang();
     fetchLocation();
+    checkLogin();
   }, []);
 
   const handleQuantityChange = (menuId, delta) => {
@@ -144,6 +151,8 @@ const ScreenMenu = () => {
               variant="success"
               className="w-100 mt-2"
               onClick={() => handleAddToCart(item)}
+              disabled={!isLoggedIn}
+              title={isLoggedIn ? "" : "Silakan login untuk memilih menu"}
             >
               Pilih
             </Button>
@@ -188,14 +197,16 @@ const ScreenMenu = () => {
             >
               Minuman
             </Button>
-            <Button
-              variant="warning"
-              size="lg"
-              onClick={openCheckoutForm}
-              disabled={keranjang.length === 0}
-            >
-              Checkout ({keranjang.length} item)
-            </Button>
+            {isLoggedIn && (
+              <Button
+                variant="warning"
+                size="lg"
+                onClick={openCheckoutForm}
+                disabled={keranjang.length === 0}
+              >
+                Checkout ({keranjang.length} item)
+              </Button>
+            )}
           </div>
 
           <Row className="mb-5">{renderMenuItems(getFilteredItems())}</Row>
