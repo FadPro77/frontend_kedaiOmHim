@@ -122,7 +122,7 @@ const NavigationBar = () => {
                 </Nav.Link>
                 <Nav.Link
                   as={Link}
-                  to="/kontak"
+                  to="/contact"
                   style={{ cursor: "pointer" }}
                   className="fw-bold ms-4 text-white"
                 >

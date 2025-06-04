@@ -13,7 +13,6 @@ import React, { useEffect, useState } from "react";
 import SelamatDatang from "../../assets/img/Frame-327.png";
 import ownerImg from "../../assets/img/image-30.png";
 import illustrateMap from "../../assets/img/unsplash_lNf0FmoMsHY.png";
-import { getMenu } from "../../service/menu";
 
 const ScreenAbout = () => {
   return (
