@@ -36,10 +36,11 @@ export const googleLogin = async (accessToken) => {
 
 export const register = async (request) => {
   const formData = new FormData();
-  formData.append("name", request.name);
+  formData.append("first_name", request.first_name);
+  formData.append("last_name", request.last_name);
   formData.append("email", request.email);
   formData.append("password", request.password);
-  formData.append("profile_picture", request.profilePicture);
+  formData.append("phone", request.phone);
 
   const response = await fetch(
     `${import.meta.env.VITE_API_URL}/auth/register`,
