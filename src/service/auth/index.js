@@ -58,6 +58,30 @@ export const register = async (request) => {
   return result?.data;
 };
 
+export const updateUser = async (id, request) => {
+  const token = localStorage.getItem("token");
+  const formData = new FormData();
+  formData.append("first_name", request.first_name);
+  formData.append("last_name", request.last_name);
+  formData.append("email", request.email);
+  formData.append("phone", request.phone);
+
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    method: "PUT",
+    body: formData,
+  });
+
+  // get the data if fetching succeed!
+  const result = await response.json();
+  if (!result?.success) {
+    throw new Error(result?.message);
+  }
+  return result?.data;
+};
+
 export const profile = async () => {
   const token = localStorage.getItem("token");
   const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/profile`, {

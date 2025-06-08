@@ -17,6 +17,7 @@ import { Route as ContactImport } from './routes/contact'
 
 // Create Virtual Routes
 
+const UserLazyImport = createFileRoute('/user')()
 const RegisterLazyImport = createFileRoute('/register')()
 const PesananLazyImport = createFileRoute('/pesanan')()
 const MenuLazyImport = createFileRoute('/menu')()
@@ -26,6 +27,12 @@ const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const UserLazyRoute = UserLazyImport.update({
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/user.lazy').then((d) => d.Route))
 
 const RegisterLazyRoute = RegisterLazyImport.update({
   id: '/register',
@@ -135,6 +142,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterLazyImport
       parentRoute: typeof rootRoute
     }
+    '/user': {
+      id: '/user'
+      path: '/user'
+      fullPath: '/user'
+      preLoaderRoute: typeof UserLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -149,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/menu': typeof MenuLazyRoute
   '/pesanan': typeof PesananLazyRoute
   '/register': typeof RegisterLazyRoute
+  '/user': typeof UserLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -160,6 +175,7 @@ export interface FileRoutesByTo {
   '/menu': typeof MenuLazyRoute
   '/pesanan': typeof PesananLazyRoute
   '/register': typeof RegisterLazyRoute
+  '/user': typeof UserLazyRoute
 }
 
 export interface FileRoutesById {
@@ -172,6 +188,7 @@ export interface FileRoutesById {
   '/menu': typeof MenuLazyRoute
   '/pesanan': typeof PesananLazyRoute
   '/register': typeof RegisterLazyRoute
+  '/user': typeof UserLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -185,6 +202,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/pesanan'
     | '/register'
+    | '/user'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -195,6 +213,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/pesanan'
     | '/register'
+    | '/user'
   id:
     | '__root__'
     | '/'
@@ -205,6 +224,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/pesanan'
     | '/register'
+    | '/user'
   fileRoutesById: FileRoutesById
 }
 
@@ -217,6 +237,7 @@ export interface RootRouteChildren {
   MenuLazyRoute: typeof MenuLazyRoute
   PesananLazyRoute: typeof PesananLazyRoute
   RegisterLazyRoute: typeof RegisterLazyRoute
+  UserLazyRoute: typeof UserLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -228,6 +249,7 @@ const rootRouteChildren: RootRouteChildren = {
   MenuLazyRoute: MenuLazyRoute,
   PesananLazyRoute: PesananLazyRoute,
   RegisterLazyRoute: RegisterLazyRoute,
+  UserLazyRoute: UserLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -247,7 +269,8 @@ export const routeTree = rootRoute
         "/login",
         "/menu",
         "/pesanan",
-        "/register"
+        "/register",
+        "/user"
       ]
     },
     "/": {
@@ -273,6 +296,9 @@ export const routeTree = rootRoute
     },
     "/register": {
       "filePath": "register.lazy.jsx"
+    },
+    "/user": {
+      "filePath": "user.lazy.jsx"
     }
   }
 }
