@@ -9,19 +9,8 @@ import {
   Accordion,
   Form,
 } from "react-bootstrap";
-import { motion } from "motion/react";
-import React, { useEffect, useState } from "react";
-import SelamatDatang from "../../assets/img/Frame-327.png";
-import ownerImg from "../../assets/img/image-30.png";
-import illustrateMap from "../../assets/img/unsplash_lNf0FmoMsHY.png";
 import logoNav from "../../assets/img/om_him-removebg-preview 1.png";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Threads,
-  Whatsapp,
-} from "react-bootstrap-icons";
+import { Facebook, Twitter, Instagram, Whatsapp } from "react-bootstrap-icons";
 import emailjs from "@emailjs/browser";
 
 const ScreenContact = () => {

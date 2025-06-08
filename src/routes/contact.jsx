@@ -5,7 +5,6 @@ import { useRef } from "react";
 import GuestLayout from "../layouts/GuestLayout";
 import ScreenContact from "../components/Contact/ScreenContact";
 import { motion } from "motion/react";
-import bgHome from "../assets/img/div-main-container.png";
 
 export const Route = createFileRoute("/contact")({
   component: Contact,
