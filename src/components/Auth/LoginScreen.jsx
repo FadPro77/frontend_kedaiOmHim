@@ -119,7 +119,7 @@ function LoginScreen() {
               <div className="d-grid gap-2 mt-3">
                 <Button onClick={handleGoogleLogin} variant="dark">
                   <img
-                    src="public/googleLogo.svg"
+                    src="googleLogo.svg"
                     alt="Google"
                     style={{ width: 25, height: 25, marginRight: -1 }}
                   />
