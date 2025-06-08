@@ -14,7 +14,6 @@ export const getPesanan = async () => {
 
   // get data
   const result = await response.json();
-  console.log("📦 getPesanan result:", result);
   return result?.data;
 };
 

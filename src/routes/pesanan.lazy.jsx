@@ -1,10 +1,7 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { useRef } from "react";
 import GuestLayout from "../layouts/GuestLayout";
 import ScreenPesanan from "../components/Pesanan/ScreenPesanan";
-import { motion } from "motion/react";
-import bgHome from "../assets/img/div-main-container.png";
 
 export const Route = createLazyFileRoute("/pesanan")({
   component: Pesanan,
