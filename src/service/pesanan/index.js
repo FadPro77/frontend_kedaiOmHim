@@ -14,6 +14,7 @@ export const getPesanan = async () => {
 
   // get data
   const result = await response.json();
+  console.log("📦 getPesanan result:", result);
   return result?.data;
 };
 
@@ -29,10 +30,27 @@ export const createPesanan = async (request) => {
     body: JSON.stringify({
       location_id: request.location_id,
       address: request.address,
-      pesanan_items: request.pesanan_items, // array of { menu_id, jumlah }
+      pesanan_items: request.pesanan_items,
     }),
   });
 
   const result = await response.json();
   return result;
+};
+
+export const deletePesanan = async (id) => {
+  const token = localStorage.getItem("token");
+
+  let url = `${import.meta.env.VITE_API_URL}/pesanan/${id}`;
+
+  const response = await fetch(url, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    method: "DELETE",
+  });
+
+  // get data
+  const result = await response.json();
+  return result?.data;
 };

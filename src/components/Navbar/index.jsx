@@ -160,7 +160,7 @@ const NavigationBar = () => {
                       <Dropdown.Item as={Link} to="/pesanan">
                         Pesanan
                       </Dropdown.Item>
-                      <Dropdown.Item as={Link} to="/riwayat">
+                      <Dropdown.Item as={Link} to="/history">
                         Riwayat
                       </Dropdown.Item>
                       <Dropdown.Divider />
