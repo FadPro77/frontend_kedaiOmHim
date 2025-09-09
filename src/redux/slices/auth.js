@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// Token expiration check
 const isTokenExpired = (token) => {
   try {
     const { exp } = JSON.parse(atob(token.split(".")[1]));
